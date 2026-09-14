@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+export const SYMBOL='https://raw.githubusercontent.com/2030Retire/ezworks-site/master/public/ezworks-symbol.png';
+export const COMPANY_LOGO='https://raw.githubusercontent.com/2030Retire/ezworks-site/master/public/haru/ezharu-logo.png';
 export type ProductKey='recorder'|'expense'|'invoice'|'class';
 
 export const productInfo: Record<ProductKey,{name:string;tagline:string;description:string;icon:string;audience:string}>={
@@ -22,17 +24,14 @@ export function Icon({type,className=''}:{type:string;className?:string}){
   if(type==='link') return <svg {...common}><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.2 1.2"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.2-1.2"/></svg>;
   if(type==='gear') return <svg {...common}><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1-2.9 2.9-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21H10v-.1a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1-2.9-2.9.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3v-4h.1a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1 2.9-2.9.1.1a1.6 1.6 0 0 0 1.8.3 1.6 1.6 0 0 0 1-1.5V3h4v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1 2.9 2.9-.1.1a1.6 1.6 0 0 0-.3 1.8 1.6 1.6 0 0 0 1.5 1h.1v4h-.1a1.6 1.6 0 0 0-1.5 1Z"/></svg>;
   if(type==='spark') return <svg {...common}><path d="m12 3 1.2 3.8L17 8l-3.8 1.2L12 13l-1.2-3.8L7 8l3.8-1.2L12 3ZM5 15l.8 2.2L8 18l-2.2.8L5 21l-.8-2.2L2 18l2.2-.8L5 15ZM19 14l.8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8L19 14Z"/></svg>;
+  if(type==='check') return <svg {...common}><path d="m5 12 4 4L19 6"/></svg>;
   return <svg {...common}><circle cx="12" cy="12" r="9"/></svg>;
 }
 
-export function ProductMark({product,compact=false}:{product:ProductKey;compact?:boolean}){
+export function ProductMark({product,compact=false,badge=false}:{product:ProductKey;compact?:boolean;badge?:boolean}){
   const p=productInfo[product];
-  return <div className={`productMark ${compact?'compact':''}`}>
-    <div className="miniSymbol">EZ</div>
-    <span className="markDivider"/>
-    <span className="featureIcon"><Icon type={p.icon}/></span>
-    <span className="productType"><b><i>EZ</i>Haru</b><small>{p.name}</small></span>
-  </div>
+  if(badge) return <div className={`compactProductMark ${compact?'compact':''}`}><img src={SYMBOL} alt=""/><span><Icon type={p.icon}/><i/><b>{p.name}</b></span></div>;
+  return <div className={`productMark ${compact?'compact':''}`}><img className="markSymbol" src={SYMBOL} alt=""/><span className="markDivider"/><span className="featureIcon"><Icon type={p.icon}/></span><span className="productType"><b><i>EZ</i>Haru</b><small>{p.name}</small></span></div>
 }
 
 export function PageHero({eyebrow,title,copy,children}:{eyebrow:string;title:string;copy:string;children?:React.ReactNode}){
