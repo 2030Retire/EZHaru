@@ -1,33 +1,54 @@
+import Image from 'next/image';
 import Link from 'next/link';
-import {Icon, ProductMark, productInfo} from '@/components/BrandSystem';
+import { BrandGlyph, GroundworkBanner, ProductCard, ReviewBanner, SectionHead } from '@/components/Site';
+import { products } from '@/components/data';
 
-const productKeys=(['recorder','expense','invoice','class'] as const);
-const steps=[
-  ['search','Understand the work','Listen, observe and map reality.'],
-  ['document','Define the process','Set the work in a repeatable order.'],
-  ['database','Fix inputs & outputs','Make each handoff clear.'],
-  ['link','Connect the data','Reduce duplicate entry and blind spots.'],
-  ['gear','Automate','Remove stable, repeatable work.'],
-  ['spark','Add AI where useful','Apply judgment only where it adds value.']
-];
+export default function HomePage() {
+  return <>
+    <section className="home-hero">
+      <Image src="/images/hero-office.png" alt="A bright, calm workspace prepared for the day" fill priority sizes="100vw" />
+      <div className="hero-shade" />
+      <div className="shell hero-copy">
+        <p className="eyebrow">PEOPLE + PROCESSES + A SMARTER TOMORROW</p>
+        <h1>Making every<br />workday <span>easier.</span></h1>
+        <p>Practical tools and services for real work. Start simple. Save time. Focus on what matters.</p>
+        <div className="actions"><Link href="/solutions/" className="button">Explore Solutions <span>→</span></Link><Link href="/products/" className="button secondary">Explore Products</Link></div>
+        <div className="hero-proof"><span><BrandGlyph name="people"/>Real business experience</span><span><BrandGlyph name="settings"/>Practical solutions</span><span><BrandGlyph name="data"/>Measurable progress</span></div>
+      </div>
+      <p className="hand-note">Less work.<br />More progress.</p>
+    </section>
 
-export default function Home(){return <>
-<section className="hero heroV3"><div className="shell heroGridV3">
-  <div className="heroCopyV3"><div className="eyebrow">SIMPLE TOOLS. REAL PROGRESS.</div><h1>Making every<br/><span>workday easier.</span></h1><p>Practical tools and services for real work. Start simple. Save time. Focus on what matters.</p><div className="actions"><Link className="btn" href="/products">Explore Products →</Link><Link className="btn ghost" href="/contact">Talk to Us</Link></div><div className="trustV3"><span>Process first</span><span>Practical systems</span><span>AI where it helps</span></div></div>
-  <div className="workdayVisual"><div className="visualGlow one"/><div className="visualGlow two"/><div className="deskNote">Less work.<br/>More what matters.</div><div className="appWindow"><div className="windowBar"><i/><i/><i/><small>EZHaru workspace</small></div><div className="windowBody"><aside><strong>EZHaru</strong><span>Workspace</span>{productKeys.map(k=><div key={k}><ProductMark product={k} badge compact/><b>{productInfo[k].name}</b></div>)}</aside><section><small>GOOD MORNING</small><h3>A simpler workday ahead.</h3><div className="searchBox">Search your work</div><div className="appCards">{productKeys.map(k=><article key={k}><ProductMark product={k} badge compact/><b>{productInfo[k].name}</b><p>{productInfo[k].description}</p></article>)}</div></section></div></div><div className="phoneMock"><span/><b>EZHaru</b>{productKeys.map(k=><div key={k}><ProductMark product={k} badge compact/><small>{productInfo[k].name}</small><i>›</i></div>)}</div></div>
-</div></section>
+    <section className="section ways"><div className="shell">
+      <SectionHead eyebrow="TWO WAYS WE HELP" title="From understanding to real results." copy="Whether you need hands-on support or focused tools, EZHaru meets you where the work is." centered />
+      <div className="ways-grid">
+        <article><BrandGlyph name="workflow" className="big-icon consulting-icon"/><div><h3>Consulting &amp; Solutions</h3><p>We study how the work actually happens, define the process, connect the systems, and automate what makes sense.</p><Link href="/solutions/">Explore Solutions →</Link></div></article>
+        <article><BrandGlyph name="products" className="big-icon cubes"/><div><h3>EZHaru Products</h3><p>Simple, focused tools built from operational problems we have had to solve ourselves.</p><Link href="/products/">Explore Products →</Link></div></article>
+      </div>
+    </div></section>
 
-<section className="section introSection"><div className="shell"><div className="center intro"><div className="eyebrow">TWO WAYS WE HELP</div><h2>From understanding to real results.</h2><p>Whether you need hands-on support or focused software, EZHaru meets you where you are.</p></div><div className="help helpV3"><article><span className="circle"><Icon type="people"/></span><div><h3>Consulting & Solutions</h3><p>We study how the work actually happens, define the process, connect the systems and automate what makes sense.</p><Link href="/solutions">Explore Solutions →</Link></div></article><article><span className="circle warm"><Icon type="cube"/></span><div><h3>EZHaru Products</h3><p>Simple, practical tools built around real operational problems and designed for everyday work.</p><Link href="/products">Explore Products →</Link></div></article></div></div></section>
+    <section className="section reality-section"><div className="shell">
+      <SectionHead eyebrow="THE REALITY" title="When people become the operating system." copy="Small teams carry work across inboxes, spreadsheets, calendars, and memory. The company stays busy, but the system cannot show where the work is waiting." />
+      <div className="reality-grid">
+        {[
+          ['Your own work starts after hours', 'Customers and incoming requests consume the day.'],
+          ['Procedure lives in people', 'Time off becomes a burden. A resignation becomes an incident.'],
+          ['Progress has to be asked for', 'Answering “where are we?” means calling a meeting.'],
+          ['The same report is rebuilt monthly', 'By the time it is finished, the numbers are already old.'],
+        ].map(([title, body], index) => <article key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{body}</p></article>)}
+      </div>
+      <div className="reality-action"><p>The problem is usually not a weak tool. It is that the work was never defined in a form a tool can use.</p><Link className="text-link" href="/solutions/">Find your starting point →</Link></div>
+    </div></section>
 
-<section className="section products productsV3"><div className="shell"><div className="heading rowHeading"><div><div className="eyebrow">EZHARU PRODUCTS</div><h2>Tools for a simpler workday.</h2><p>Four focused tools. One EZHaru family.</p></div><Link className="textLink" href="/products">View all products →</Link></div><div className="cards cardsV3">{productKeys.map(k=><article className={k} key={k}><ProductMark product={k}/><h3>{productInfo[k].tagline}</h3><p>{productInfo[k].description}</p><Link href={`/products/${k}`}>Learn more →</Link></article>)}</div></div></section>
+    <section className="section products-section"><div className="shell">
+      <div className="section-row"><SectionHead eyebrow="OUR PRODUCTS" title="Tools for a simpler workday." copy="Use them individually or together — each one keeps the next step clear." /><Link className="text-link" href="/products/">View all products →</Link></div>
+      <div className="product-grid">{products.map(p => <ProductCard product={p} key={p.slug} />)}</div>
+    </div></section>
+    <GroundworkBanner />
 
-<section className="section realitySection"><div className="shell realityGrid"><div><div className="eyebrow">THE REALITY</div><h2>A structure where people become the bottleneck.</h2><p>Small companies cannot divide work the way a large company can. The owner and a few experienced people end up carrying the process, the exceptions and the memory.</p><p>That is why the first question is not “Where can we add AI?” It is “Where does the state of the work live today?”</p><Link className="textLink" href="/solutions">See the problems we work on →</Link></div><div className="realityList"><article><b>01</b><div><h3>Your own work starts after hours.</h3><p>Customers and incoming requests consume the day.</p></div></article><article><b>02</b><div><h3>Procedure lives in people.</h3><p>Time off becomes a burden and a resignation becomes an incident.</p></div></article><article><b>03</b><div><h3>Nothing records where work stalls.</h3><p>Everyone is busy, but the bottleneck is still invisible.</p></div></article><article><b>04</b><div><h3>The same report is rebuilt again.</h3><p>By the time it is complete, the numbers are already old.</p></div></article></div></div></section>
-
-<section className="section approach approachV3"><div className="shell approachGridV3"><div><div className="eyebrow">OUR APPROACH</div><h2>Groundwork before AI.</h2><p>Define the process, fix its inputs and outputs, let useful data accumulate, then automate. AI comes after the groundwork — not before it.</p><Link className="btn ghost" href="/how-we-work">See How We Work →</Link></div><div className="stepsV3">{steps.map(([icon,title,copy],i)=><div className="stepV3" key={title}><span><Icon type={icon}/></span><b>{title}</b><small>{copy}</small>{i<steps.length-1&&<i>→</i>}</div>)}</div></div></section>
-
-<section className="section review reviewV3"><div className="shell reviewGridV3"><div><div className="eyebrow">START SMALL</div><h2>Two-Week Operational Review</h2><h3>$2,400 fixed price</h3><p>A focused way to understand the current state, identify the most important bottlenecks, and decide what should happen now, later or not at all.</p><Link className="btn" href="/contact">Request a Review →</Link></div><article><small>WHAT YOU LEAVE WITH</small><p><b>01</b> Current-state read</p><p><b>02</b> Three priority bottlenecks</p><p><b>03</b> Now / Later / Never roadmap</p></article><article><small>PRACTICAL EXPERIENCE</small><div className="techCloud"><span>SAP / ERP</span><span>CRM</span><span>WMS</span><span>Microsoft 365</span><span>Power Platform</span><span>QuickBooks</span><span>Integration</span><span>Mobile</span></div></article></div></section>
-
-<section className="section principleSection"><div className="shell principleCard"><div><div className="eyebrow">ONE PRACTICAL PRINCIPLE</div><h2>Build the thing that notices uncertainty first.</h2><p>Repeated decisions should become rules. Exceptions should become visible. AI should handle what does not reduce cleanly to a rule — with control around it.</p></div><div><span>✓ Clear process</span><span>✓ Visible exceptions</span><span>✓ Useful automation</span><span>✓ Human judgment where needed</span></div></div></section>
-
-<section className="principles principlesV3"><div className="shell"><span>Less work. More progress.</span><b>Practical systems.</b><b>Clear processes.</b><b>Useful automation.</b><b>AI where it actually helps.</b></div></section>
-</>}
+    <section className="section process-preview"><div className="shell">
+      <div className="section-row"><SectionHead eyebrow="HOW WE WORK" title="A practical path from friction to progress." copy="Each stage leaves something useful behind. The first two include a clear place to stop." /><Link className="text-link" href="/how-we-work/">See the full process →</Link></div>
+      <ol className="process-line">{['Understand', 'Define', 'Build', 'Put it to work'].map((x, i) => <li key={x}><span>{i + 1}</span><div><h3>{x}</h3><p>{['See the week you actually have.', 'Fix inputs, outputs, owners, and exceptions.', 'Make the smallest complete version.', 'Migrate, train, and stay through real use.'][i]}</p></div></li>)}</ol>
+    </div></section>
+    <ReviewBanner />
+  </>;
+}
